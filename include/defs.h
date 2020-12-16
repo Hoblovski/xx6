@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils.h"
+
 // printf.c
 void printf(const char *fmt, ...);
 void panic_on(int cond, const char *fmt, ...);
@@ -11,7 +13,10 @@ void uartputc_sync(int c);
 // trapasm.S
 void trapentry(void);
 
-// user.c
+// trap.c
+#include "syscall.h"
+
+// user/init.c
 void usermain(void);
 
 // riscv.c

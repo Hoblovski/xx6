@@ -57,6 +57,7 @@ DEFINE_CSR_ACCESSOR(sip)
 DEFINE_CSR_ACCESSOR(stvec)
 
 DEFINE_CSR_ACCESSOR(scause)
+#define SCAUSE_ECALL 8
 
 //============================================================================
 

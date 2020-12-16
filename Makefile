@@ -1,6 +1,7 @@
 K = kernel
 I = include
 S = scripts
+U = user
 
 TOOLPREFIX = riscv64-unknown-elf-
 CC = $(TOOLPREFIX)gcc
@@ -36,9 +37,12 @@ KOBJS = \
 	$(patsubst %.S,%.o,$(wildcard $K/*.S)) \
 	$(patsubst %.c,%.o,$(wildcard $K/*.c))
 
+UOBJS = \
+	$(patsubst %.S,%.o,$(wildcard $U/*.S)) \
+	$(patsubst %.c,%.o,$(wildcard $U/*.c))
 
-$(KERNIMG): $(KOBJS) $S/kernel.ld FORCE
-	$(LD) $(LDFLAGS) -T $S/kernel.ld -o $@ $(KOBJS)
+$(KERNIMG): $(KOBJS) $(UOBJS) $S/kernel.ld FORCE
+	$(LD) $(LDFLAGS) -T $S/kernel.ld -o $@ $(KOBJS) $(UOBJS)
 	$(OBJDUMP) -S $@ > $@.s
 
 kernel: $(KERNIMG)
