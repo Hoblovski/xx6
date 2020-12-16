@@ -1,6 +1,4 @@
-#include "uart.h"
-#include "printf.h"
-#include "riscv.h"
+#include "defs.h"
 
 // m 态初始化
 

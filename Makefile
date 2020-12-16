@@ -29,6 +29,9 @@ MEMSIZE = 128M
 QEMUEXTRAOPTS ?=
 QEMUOPTS = -machine virt -bios none -kernel $(KERNIMG) -m $(MEMSIZE) -smp $(CPUS) -nographic $(QEMUEXTRAOPTS)
 
+##############################################################################
+.PHONY: kernel qemu clean format FORCE print-%
+
 KOBJS = \
 	$(patsubst %.S,%.o,$(wildcard $K/*.S)) \
 	$(patsubst %.c,%.o,$(wildcard $K/*.c))
@@ -51,9 +54,6 @@ format:
 
 FORCE:
 
-
 # shell script integration
 print-%:
 	@echo $($(shell echo $(patsubst print-%,%,$@)))
-
-.PHONY: kernel qemu clean format FORCE qemucmd print-%

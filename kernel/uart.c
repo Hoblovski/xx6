@@ -1,4 +1,5 @@
 // 从 xv6-riscv 复制的代码。
+#include "defs.h"
 
 //
 // low-level driver routines for 16550a UART.

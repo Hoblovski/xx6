@@ -1,8 +1,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 
-#include "uart.h"
-#include "printf.h"
+#include "defs.h"
 
 static char digits[] = "0123456789abcdef";
 
@@ -34,7 +33,7 @@ static void printint_dec(int val)
 static void printint_hex(int val)
 {
 	for (int shift = 8 * sizeof(val) - 4; shift >= 0; shift -= 4)
-		uartputc_sync((val >> shift) & 0xf);
+		uartputc_sync(digits[(val >> shift) & 0xf]);
 }
 
 static void printptr(uint64_t val)

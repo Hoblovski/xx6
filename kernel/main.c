@@ -1,5 +1,4 @@
-#include "printf.h"
-#include "riscv.h"
+#include "defs.h"
 
 void main(void)
 {
@@ -7,13 +6,15 @@ void main(void)
 
 	unsigned long x = r_sstatus();
 	x &= ~SSTATUS_SPP_MASK;
-	x |= SSTATUS_SPP_S;
+	x |= SSTATUS_SPP_U;
+	x &= ~SSTATUS_SPIE;
 	w_sstatus(x);
 
 	// set M Exception Program Counter to main, for mret.
 	// requires gcc -mcmodel=medany
-	extern void usermain(void);
 	w_sepc((uint64_t)usermain);
+
+	w_stvec((uint64_t)trapentry);
 
 	asm volatile("sret");
 
