@@ -36,7 +36,6 @@ trapentry:
 	sd t4, 224(sp)
 	sd t5, 232(sp)
 	sd t6, 240(sp)
-    mv a0, sp
 
 	call do_trap
 

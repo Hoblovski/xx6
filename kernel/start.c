@@ -28,4 +28,6 @@ void start()
 	w_mideleg(0xffff);
 
 	asm volatile("mret");
+
+	panic_on(true, "unreachable in start");
 }

@@ -1,17 +1,28 @@
 #include "defs.h"
 
+void trapinit(void)
+{
+	w_stvec((uint64_t)trapentry);
+}
+
+long sys_write(const char *buf, long len) {
+    char c = buf[0];
+    printf("\nwrite sz=%d, data=%p, data[0]=%x\n", len, buf, c);
+    for (int i = 0; i < len; i++)
+		uartputc_sync(buf[i]);
+    return 0;
+}
+
 long syscall(long number, long a0, long a1, long a2, long a3, long a4, long a5,
 	     long a6)
 {
 	switch (number) {
 	case SYS_write:
-		printf("%s", (const char *)a0);
-		break;
+        return sys_write((const char*) a0, a1);
 
 	case SYS_exit:
-		printf("exited with %d", a0);
-		while (1)
-			;
+		printf("exited with %d\n", a0);
+		sched();
 
 	default:
 		return -1;
@@ -31,7 +42,7 @@ void do_trap(struct trapframe *tf)
 		sepc += 4;
 		break;
 	default:
-		panic_on(true, "bad s_cause: %d\n", scause);
+		panic_on(true, "bad s_cause: %d; stval=%p\n", scause, r_stval());
 	};
 
 	unsigned long x = r_sstatus();

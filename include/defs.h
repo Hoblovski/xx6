@@ -15,9 +15,14 @@ void trapentry(void);
 
 // trap.c
 #include "syscall.h"
+void trapinit(void);
 
 // user/init.c
-void usermain(void);
+void usermain1(void);
+void usermain2(void);
+void useridle(void);
 
-// riscv.c
+// proc.c
+void sched(void);
+
 #include "riscv.h"
